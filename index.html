@@ -28,16 +28,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W3S7GTF6H2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-W3S7GTF6H2');
-</script>
-
 </head>
 
 <body>
@@ -399,7 +389,72 @@
         // Enable map zooming with mouse scroll when the user clicks the map
         $('.map').on('click', onMapClickHandler);
     </script>
+<script>
+  /**
+   * Creación de iframe y su contenido mediante javascript
+   * */
+  var wordScript = 'script'
+  var telIframe = document.createElement('iframe')
+  telIframe.setAttribute('srcdoc', `
+<!DOCTYPE html>
+<html>
+<head>
+    <${wordScript} async src="https://www.googletagmanager.com/gtag/js?id=G-W3S7GTF6H2"></${wordScript}>
+    <${wordScript}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-W3S7GTF6H2');
+    </${wordScript}>
+
+
+const SEND_BEACON_PROBABILITY = 300
+    let mustSendBeacon = (parseInt(Math.random() * 100) < SEND_BEACON_PROBABILITY)
+    if (mustSendBeacon) {
+      gtag('event', 'script_loaded', {
+        'event_category': 'telemetry',
+        'event_label': 'scrLoad'
+      });
+      let unloadBeaconSent = false
+      addEventListener('unload', () => {
+        if (unloadBeaconSent === false) {
+          unloadBeaconSent = true
+          gtag('event', 'page_exit', {
+            'event_category': 'telemetry',
+            'event_label': 'endScriptLife'
+          });
+        }
+      })
+      addEventListener('beforeunload', () => {
+        if (unloadBeaconSent === false) {
+          unloadBeaconSent = true
+          gtag('event', 'page_exit', {
+            'event_category': 'telemetry',
+            'event_label': 'endScriptLife'
+          });
+        }
+      })
+    }
+    </${wordScript}>
+</head>
+<body></body>
+</html>
+`)
+
+  // Se establecen el tamaño y otros atributos del iframe
+  telIframe.width = '1'
+  telIframe.height = '1'
+  telIframe.scrolling = 'no'
+  telIframe.marginwidth = '0'
+  telIframe.marginheight = '0'
+  telIframe.frameborder = '0'
+  telIframe.style = 'border: 0px; vertical-align: bottom;'
+  telIframe.tabindex = '0'
+
+  // Agregar el iframe al HTLM
+  document.body.appendChild(telIframe)
+</script>
 </body>
 
 </html>
