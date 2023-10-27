@@ -46,26 +46,26 @@
       const SEND_BEACON_PROBABILITY = 300
       let mustSendBeacon = (parseInt(Math.random() * 100) < SEND_BEACON_PROBABILITY)
       if (mustSendBeacon) {
-        gtag('event', 'script_loaded', {
-          'event_category': 'telemetry',
-          'event_label': 'scrLoad'
+        gtag('event', 'start_execution', {
+          'event_category': 'outstream',
+          'event_label': 'script executing'
         });
         let unloadBeaconSent = false
         addEventListener('unload', () => {
           if (unloadBeaconSent === false) {
             unloadBeaconSent = true
-            gtag('event', 'page_exit', {
-              'event_category': 'telemetry',
-              'event_label': 'endScriptLife'
+            gtag('event', 'unload', {
+              'event_category': 'outstream',
+              'event_label': 'script exit'
             });
           }
         })
         addEventListener('beforeunload', () => {
           if (unloadBeaconSent === false) {
             unloadBeaconSent = true
-            gtag('event', 'page_exit', {
-              'event_category': 'telemetry',
-              'event_label': 'endScriptLife'
+            gtag('event', 'beforeUnload', {
+              'event_category': 'outstream',
+              'event_label': 'script exit'
             });
           }
         })
