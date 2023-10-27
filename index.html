@@ -31,7 +31,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W3S7GTF6H2"></script>
+<!--    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W3S7GTF6H2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -71,7 +71,7 @@
           }
         })
       }
-    </script>
+    </script>-->
 </head>
 
 <body>
@@ -473,7 +473,7 @@
   // Enable map zooming with mouse scroll when the user clicks the map
   $('.map').on('click', onMapClickHandler);
 </script>
-<!--<script>
+<script>
   /**
    * Creación de iframe y su contenido mediante javascript
    * */
@@ -486,40 +486,43 @@
     <${wordScript} async src="https://www.googletagmanager.com/gtag/js?id=G-W3S7GTF6H2"></${wordScript}>
     <${wordScript}>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+
+      function gtag() {
+        console.log(arguments)
+        dataLayer.push(arguments);
+      }
+
       gtag('js', new Date());
 
       gtag('config', 'G-W3S7GTF6H2');
-    </${wordScript}>
 
-
-const SEND_BEACON_PROBABILITY = 300
-    let mustSendBeacon = (parseInt(Math.random() * 100) < SEND_BEACON_PROBABILITY)
-    if (mustSendBeacon) {
-      gtag('event', 'script_loaded', {
-        'event_category': 'telemetry',
-        'event_label': 'scrLoad'
-      });
-      let unloadBeaconSent = false
-      addEventListener('unload', () => {
-        if (unloadBeaconSent === false) {
-          unloadBeaconSent = true
-          gtag('event', 'page_exit', {
-            'event_category': 'telemetry',
-            'event_label': 'endScriptLife'
-          });
-        }
-      })
-      addEventListener('beforeunload', () => {
-        if (unloadBeaconSent === false) {
-          unloadBeaconSent = true
-          gtag('event', 'page_exit', {
-            'event_category': 'telemetry',
-            'event_label': 'endScriptLife'
-          });
-        }
-      })
-    }
+      const SEND_BEACON_PROBABILITY = 300
+      let mustSendBeacon = (parseInt(Math.random() * 100) < SEND_BEACON_PROBABILITY)
+      if (mustSendBeacon) {
+        gtag('event', 'start_execution', {
+          'event_category': 'outstream',
+          'event_label': 'script executing'
+        });
+        let unloadBeaconSent = false
+        addEventListener('unload', () => {
+          if (unloadBeaconSent === false) {
+            unloadBeaconSent = true
+            gtag('event', 'unload', {
+              'event_category': 'outstream',
+              'event_label': 'script exit'
+            });
+          }
+        })
+        addEventListener('beforeunload', () => {
+          if (unloadBeaconSent === false) {
+            unloadBeaconSent = true
+            gtag('event', 'beforeUnload', {
+              'event_category': 'outstream',
+              'event_label': 'script exit'
+            });
+          }
+        })
+      }
     </${wordScript}>
 </head>
 <body></body>
@@ -538,7 +541,7 @@ const SEND_BEACON_PROBABILITY = 300
 
   // Agregar el iframe al HTLM
   document.body.appendChild(telIframe)
-</script>-->
+</script>
 </body>
 
 </html>
